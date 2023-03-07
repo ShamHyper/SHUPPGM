@@ -1,0 +1,19 @@
+{
+  "Name": "ShamHyper's Utils",
+  "Author": "ShamHyper",
+  "Description": "My pack of funny things, humans, etc..",
+  "ModVersion": "1.0",
+  "GameVersion": "1.0+",
+  "ThumbnailPath": "thumb.png",
+  "EntryPoint": "Mod.Mod",
+  "Tags": [
+    "Fun"
+  ],
+  "Scripts": [
+    "script.cs",
+    "category.cs"
+  ],
+  "Active": true,
+  "UGCIdentity": null,
+  "CreatorUGCIdentity": "2943502047"
+}
