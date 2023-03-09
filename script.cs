@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Text;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Events;
 
-namespace Mod
+namespace SHU
 {
 
-    public class Mod
+    public class SHU
     {
         public static void Main()
         {
@@ -16,6 +18,7 @@ namespace Mod
                 new Modification()
                 {
                     OriginalItem = ModAPI.FindSpawnable("Human"), //item to derive from
+                    NameToOrderByOverride = "A",
                     NameOverride = "Human Afterlife -SHU", //new item name with a suffix to assure it is globally unique
                     DescriptionOverride = "Human. The same person who tolerates the bullying of the players. But this is his reborn version, with visible past defects. And not naked xd",
                     CategoryOverride = ModAPI.FindCategory("SH's Utils"), //new item category
@@ -54,6 +57,7 @@ namespace Mod
                 new Modification()
                 {
                     OriginalItem = ModAPI.FindSpawnable("Soap"), //item to derive from
+                    NameToOrderByOverride = "B",
                     NameOverride = "Duffle Bag -SHU", //new item name with a suffix to assure it is globally unique
                     DescriptionOverride = "Bag. Bag and in Africa Bag (Russian Proverb).", //new item description
                     CategoryOverride = ModAPI.FindCategory("SH's Utils"), //new item category
@@ -74,6 +78,7 @@ namespace Mod
                 new Modification()
                 {
                     OriginalItem = ModAPI.FindSpawnable("Sword"), //item to derive from
+                    NameToOrderByOverride = "C",
                     NameOverride = "Old Machete -SHU", //new item name with a suffix to assure it is globally unique
                     DescriptionOverride = "Machete, very sharp!.", //new item description
                     CategoryOverride = ModAPI.FindCategory("SH's Utils"), //new item category
@@ -94,6 +99,7 @@ namespace Mod
                 new Modification()
                 {
                     OriginalItem = ModAPI.FindSpawnable("Magnum Revolver"), //item to derive from
+                    NameToOrderByOverride = "D",
                     NameOverride = "Old Magnum -SHU", //new item name with a suffix to assure it is globally unique
                     DescriptionOverride = "Survival ver. of Magnum. Some smart guy managed to remake a revolver for a 50 BMG caliber! AND IT WORKS?!", //new item description
                     CategoryOverride = ModAPI.FindCategory("SH's Utils"), //new item category
@@ -104,11 +110,11 @@ namespace Mod
                         var firearm = Instance.GetComponent<FirearmBehaviour>();
                         Cartridge customCartridge = ModAPI.FindCartridge("38 Special"); //load a copy of the 9mm cartridge
                         customCartridge.name = ".50 BMG"; //set a name
-                        customCartridge.Damage *= 1.99f; //change the damage however you like
-                        customCartridge.StartSpeed *= 1.99f; //change the bullet velocity
+                        customCartridge.Damage *= 2.5f; //change the damage however you like
+                        customCartridge.StartSpeed *= 1.75f; //change the bullet velocity
                         customCartridge.PenetrationRandomAngleMultiplier *= 2.5f; //change the accuracy when the bullet travels through an object
-                        customCartridge.Recoil *= 2.25f; //change the recoil
-                        customCartridge.ImpactForce *= 1.75f; //change how much the bullet pushes the target
+                        customCartridge.Recoil *= 2.3f; //change the recoil
+                        customCartridge.ImpactForce *= 1.8f; //change how much the bullet pushes the target
 
                         //set the cartridge to the FirearmBehaviour
                         firearm.Cartridge = customCartridge;
@@ -125,10 +131,68 @@ namespace Mod
                     }
                 }
             );
+            ModAPI.Register(
+                            new Modification()
+                            {
+                                OriginalItem = ModAPI.FindSpawnable("Shotgun"), //item to derive from
+                                NameToOrderByOverride = "E",
+                                NameOverride = "Panic Attack [TF2] -SHU", //new item name with a suffix to assure it is globally unique
+                                DescriptionOverride = "Team Fortress 2 Panic Attack. The sprite was copied directly from the image of the weapon in the game, so it 100% conveys the spirit of TF2", //new item description
+                                CategoryOverride = ModAPI.FindCategory("SH's Utils"), //new item category
+                                ThumbnailOverride = ModAPI.LoadSprite("PanicAttack/thumb.png"), //new item thumbnail (relative path)
+                                AfterSpawn = (Instance) =>
+                                {
+                                    Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("PanicAttack/PanicAttaaack.png");
+                                    var firearm = Instance.GetComponent<FirearmBehaviour>();
+                                    Cartridge customCartridge = ModAPI.FindCartridge("30-06"); //load a copy of the 9mm cartridge
+                                    customCartridge.name = "12 Gauge"; //set a name
+                                    customCartridge.Damage *= 1.3f; //change the damage however you like
+                                    customCartridge.StartSpeed *= 1.15f; //change the bullet velocity
+                                    customCartridge.PenetrationRandomAngleMultiplier *= 3.0f; //change the accuracy when the bullet travels through an object
+                                    customCartridge.Recoil *= 3.0f; //change the recoil
+                                    customCartridge.ImpactForce *= 1.2f; //change how much the bullet pushes the target
+                                    firearm.Cartridge = customCartridge;
+                                    firearm.BulletsPerShot = 4;
+                                    firearm.ShotSounds = new AudioClip[]
+                                    {
+                ModAPI.LoadSound("PanicAttack/tf2_backshot_shotty.wav")
+                                    };
+
+                                    // set the collision box to the new sprite shape
+                                    // this is the easiest way to fix your collision shape, but it also the slowest.
+                                    Instance.FixColliders();
+                                }
+                            }
+                        );
+            ModAPI.Register(
+                new Modification()
+                {
+                    OriginalItem = ModAPI.FindSpawnable("Bowling Pin"),
+                    NameOverride = "Flamboyant Flamenco [TF2] -SHU",
+                    NameToOrderByOverride = "E - 1",
+                    DescriptionOverride = "Hat of Pyro from TF2.",
+                    CategoryOverride = ModAPI.FindCategory("SH's Utils"),
+                    ThumbnailOverride = ModAPI.LoadSprite("Flamboyant/thumb.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("Flamboyant/Flamboyant.png", 1.15f);
+						Instance.GetComponent<SpriteRenderer>().sortingOrder = 15;
+                        ArmorBehaviour Armor = Instance.AddComponent<ArmorBehaviour>();
+
+                        Armor.stabResistance = 15f;
+                        Armor.armorPiece = "Head";
+                        Armor.armorTier = 0;
+
+                        Instance.GetComponent<PhysicalBehaviour>().InitialMass = 0.01f;
+                        Instance.GetComponent<PhysicalBehaviour>().TrueInitialMass = 0.01f;
+                        Instance.FixColliders();
+				    }
+                }
+            );
         }
 
     }
-public class RandomHumanTextureBehaviour : MonoBehaviour
+    public class RandomHumanTextureBehaviour : MonoBehaviour
     {
         public List<Texture2D> Textures = new List<Texture2D>();
         int chosenIndex = 0;
@@ -136,8 +200,8 @@ public class RandomHumanTextureBehaviour : MonoBehaviour
         ContextMenuButton menuButton;
         public void Start()
         {
-            chosenIndex = UnityEngine.Random.Range(0, Textures.Count - -1); 
-            ChangeTexture();   
+            chosenIndex = UnityEngine.Random.Range(0, Textures.Count - -1);
+            ChangeTexture();
             GetComponent<PhysicalBehaviour>().ContextMenuOptions.Buttons.Add(menuButton = new ContextMenuButton("ChangeTexture", "Change Texture", "Switches to the change human skin", new UnityAction[1]
                  {
                 (UnityAction) (() =>
@@ -152,7 +216,7 @@ public class RandomHumanTextureBehaviour : MonoBehaviour
                     }
 
                 })
-                 }));     
+                 }));
         }
         public void ChangeTexture()
         {

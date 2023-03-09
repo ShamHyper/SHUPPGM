@@ -5,11 +5,13 @@
   "ModVersion": "1.0",
   "GameVersion": "1.0+",
   "ThumbnailPath": "thumb.png",
-  "EntryPoint": "Mod.Mod",
+  "EntryPoint": "SHU.SHU",
   "Tags": [
     "Fun"
   ],
   "Scripts": [
+    "ArmorBehaviour.cs",
+    "IgnoreArmor.cs",
     "script.cs",
     "category.cs"
   ],
